@@ -1,0 +1,5 @@
+Options -Indexes
+IndexIgnore css/*
+IndexIgnore js/*
+IndexIgnore environnement/*
+IndexIgnore image-site/*
