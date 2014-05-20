@@ -1,0 +1,139 @@
+<!doctype html>
+<html>
+<head>
+		<title>LemZoun</title>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="apple-itunes-app" content="app-id=543672169">
+		
+		<link rel="shortcut icon" href="../image-site/image-index/favicon.png" />
+		<link rel="stylesheet" href="css/files.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="css/core.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="css/upload.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="../css/styles.css" type="text/css" media="screen" />
+		<link type="text/css" rel="stylesheet" href="../css/lightbox-form.css">
+		<link type="text/css" rel="stylesheet" href="../css/partage.css">
+		
+		<script type="text/javascript" src="../js/jquery.min.js"></script>
+		<script type="text/javascript" src="../js/lightbox-form.js"></script>
+		<script type="text/javascript" src="../js/list_tag.js"></script>
+		<script type="text/javascript" src="../js/script.js"></script>
+		<script type="text/javascript" src="../js/welcome.js"></script>
+		<script type="text/javascript" src="../js/download.js"></script>
+		<script type="text/javascript" src="../js/partager_fichier.js"></script>
+		<script type="text/javascript" src="../js/evenement.js"></script>
+		<script>
+		
+			$(document).ready(function() 
+			{
+				$('#monForm').on('submit', function() 
+				{
+						var Tag = $('#Tag').val();
+					if(Tag == '') 
+					{
+					alert('Les champs doivent êtres remplis');
+					} 
+					else {
+					$.ajax({
+						url: 'Tag.php',
+						type: 'POST',
+						data: $(this).serialize(),
+						dataType: 'json',
+						success: function(json) 
+								{
+							
+								alert(json.reponse);
+								document.forms["monForm"].Tag.value="";
+								
+								}
+							});
+						}
+				return false;
+				});
+			});
+		
+		</script>
+</head>
+				
+<body id="body-user" onload="welcome();listerFichier();" >
+	<header>
+		<div id="header">
+			<div id="logo-claim" style="display:none;"></div>
+			<div id="mdiv"></div>
+			<div id="logout"><input id="logout_bt" type="button" value="Déconnexion" onclick='logout();'/> </div>
+		</div>
+	</header>
+	<nav>
+		<div id="navigation">
+			<ul id="apps" class="svg">
+				<div class="wrapper"></br>
+					<li data-id="files_index">
+						<a href="" title="" class="active">
+							<span>Files</span>
+						</a>
+					</li>
+					<li data-id="tags_index">
+						<a href="#AjouterTag" onclick="openbox(1)">
+							<font size=3px><span>Tags</span></font></a>
+					</li>
+					<li data-id="evenement_index">
+						<a href="#" onclick="evenement();">
+							<font size=3px><span>evenements</span></font></a>
+					</li>
+									
+				</div>
+			</ul>
+		</div>
+	</nav>
+	<div id="content-wrapper">
+		<div id="content">
+			<div id="controls">		
+				<div class="actions creatable">
+					<form enctype="multipart/form-data" method="POST" id='form1' name='form1'>
+						<div id="upload" class="button" title="Upload max. 25 MB">
+							<input type="file" id="file_upload_start" name='files' multiple />
+								<a href="#" class="svg"></a>
+						</div>
+						<div id="list_tag" ></div>
+					</form>
+				</div></br>
+				<div id="divi"></div>
+			</div></br></br></br>
+			<div id="contenu"></div>		
+		</div>	
+	</div>
+	<div id="shadowing"></div>
+		<div id="box">
+			<div class="modalLayer" id="AjouterTag">
+				<div class="popup_block">
+					<a href="">
+						<img alt="Fermer" title="Fermer la fenêtre" class="btn_close" src="../image-site/image-index/close_pop.png">
+					</a>
+					<form method="POST" name="monForm" id="monForm">
+						<font size=5px>Ajouter Tag</font>
+							<input id="Tag" type="text" name="Tag">
+							<input type="submit" name="submit" value="Envoyer">
+						</form>  
+				</div>
+			</div>
+		</div>
+		<div id='mess_up'>
+		</div>
+		
+		
+<!-- 		
+		<div id="shadowingPartage"></div>
+		<div id="boxPartage">
+			<div class="modalLayerPartage" id="Partage">
+				<div class="popup_block_Partage">
+					<a href="">
+						<img alt="Fermer" title="Fermer la fenêtre" class="btn_close" src="../image-site/image-index/close_pop.png">
+					</a>
+					<div id="Partage"></div>
+				</div>
+			</div>
+		</div> -->
+	</body>		
+</html>			
+	
