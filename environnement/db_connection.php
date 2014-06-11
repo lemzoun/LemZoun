@@ -3,10 +3,10 @@
 // create function
 class db_connect
 {
-	private $host_name= "localhost";
-	private $dbname_name='cloud';
-	private $user_name='root';
-	private $password_pass='';
+	private $host_name= "127.4.62.2";
+	private $dbname_name='smartframe';
+	private $user_name='admin1MwVTtq';
+	private $password_pass='sf19c3wA7hGf';
 	
 function db_connect() {
 	try

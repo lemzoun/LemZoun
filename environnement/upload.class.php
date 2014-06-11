@@ -59,7 +59,7 @@ class Upload {
 	 {
 		try
 					{
-						 $bdd = new PDO('mysql:host=localhost;dbname=cloud', 'root', '5ecur1ty');
+						 $bdd = new PDO('mysql:host=127.4.62.2;dbname=smartframe', 'admin1MwVTtq', 'sf19c3wA7hGf');
 					}
 				catch (Exception $e)
 					{
@@ -124,6 +124,7 @@ class Upload {
         $this->SetMessage("Message: The file size is less than the MaximumFileSize.");
         return true;
     }
+
  
     /**
      *@method bool ValidateExistance() determins whether the file already exists. If so, rename $FileName.
@@ -223,26 +224,28 @@ class Upload {
 	 $token_file=$_SESSION['token_file'];
 	 $extension=$_SESSION["type_file"];
 	 $Size=$_SESSION["size_file"];
-	 $location_file=$_SERVER['DOCUMENT_ROOT'].'/LemZoun/environnement/donnee/'.$FileName;
+	 $location_file='donnee/'.$FileName;
 	 $nom_tag=$_SESSION['tag'];
 	 $_SERVER['PHP_AUTH_USER']=$_SESSION['id_utilisateur'];
 	 //$location_file=$_SERVER['DOCUMENT_ROOT'].'/LemZoun/environnement/donnee/'.$FileName.$id_user;
 	 $Email=$_SERVER['PHP_AUTH_USER'];
 	try
             {
-                 $bdd = new PDO('mysql:host=localhost;dbname=cloud', 'root', '5ecur1ty');
+                $bdd = new PDO('mysql:host=127.4.62.2;dbname=smartframe', 'admin1MwVTtq', 'sf19c3wA7hGf');
             }
         catch (Exception $e)
             {
                   die('Erreur : ' . $e->getMessage());
             }
 		
-        $reponse = $bdd->query("SELECT id_user FROM lz_user where Email='$Email'");
+        $reponse = $bdd->query("SELECT * FROM lz_user where Email='$Email'");
 		$donnees = $reponse->fetch();
 		
 		if (isset($donnees) && $donnees != 0)
 		{
 		$id_user=$donnees['id_user'];
+		$espace=$donnees['espace'];
+		$espace=$donnees['espace']+$Size;
 		//$location_file=$_SERVER['DOCUMENT_ROOT'].'/LemZoun/environnement/donnee/'.$FileName.$id_user;
 		//}
 	   //$conn=mysql_connect("localhost","root","") or die(mysql_error());
@@ -252,10 +255,18 @@ class Upload {
 		//		mysql_select_db("cloud") or die(mysql_error());
 		//		$retval = mysql_query( $sql, $conn );
 		$bdd->exec("INSERT INTO lz_fichier(id_file,id_user,nom_file,token_file,nom_tag,type_file,size_file,location_file)VALUES('', '$id_user','$FileName','$token_file','$nom_tag','$extension','$Size ' ,'$location_file')");  
-				
+		$bdd->exec("UPDATE lz_user SET espace='$espace' where id_user='$id_user'");
+		 $reponse = $bdd->query("SELECT * FROM lz_fichier where id_user='$id_user' and nom_file='$FileName'");
+		 $donnees = $reponse->fetch();
+		 $id_file= $donnees['id_file'];
+$bdd->exec("INSERT INTO lz_cryptage(id_cryptage,id_fichier)VALUES('', '$id_file')");  				
 				//mysql_close($conn);
 		}
 	 }
+	 	function test_espace($size,$Email)
+	{
+	
+	}
     function UploadFile()
     {
 
@@ -306,8 +317,27 @@ class Upload {
 				$TempFileName = $this->GetTempName();
 				$Size = filesize($TempFileName);
 				
-		
-                move_uploaded_file($TempFileName, $UploadDirectory . $FileName);
+				$Email=$_SERVER['PHP_AUTH_USER'];
+				//$a=test_espace($Size,$Email);
+				try
+            {
+                $bdd = new PDO('mysql:host=127.4.62.2;dbname=smartframe', 'admin1MwVTtq', 'sf19c3wA7hGf');
+            }
+        catch (Exception $e)
+            {
+                  die('Erreur : ' . $e->getMessage());
+            } 
+			$reponse = $bdd->query("SELECT * FROM lz_user where Email='$Email'");
+			$donnees = $reponse->fetch();
+			$espace=$donnees['espace']+$Size;
+			if($espace>20000000)
+			{
+			echo 'espace insufisant';
+			return false;
+			}
+			else
+			{
+		  move_uploaded_file($TempFileName, $UploadDirectory . $FileName);
 				
 				$location_file=$UploadDirectory . $FileName;
 				
@@ -315,7 +345,10 @@ class Upload {
 				$_SESSION['size_file']=$Size ;	
 				$_SESSION['location_file']=$location_file;	
                 return true;
-            } 
+			}
+				
+				
+			}
 			else 
 			{
                 return false;

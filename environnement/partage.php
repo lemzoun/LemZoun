@@ -45,6 +45,7 @@ else if($_POST['suppression_fichier'])
 else if ($_POST['renomme'])
 {
 	$_POST['renomme']=htmlspecialchars($_POST['renomme']);
+	//renommerfile($_POST['ancien'],$_POST['renomme']);
 	
 	
 }

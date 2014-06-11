@@ -15,7 +15,7 @@ function welcome(){
 			//alert (json.login);
 			resultDiv=document.getElementById("mdiv");            
             resultDiv.style.display='inline';                                          
-            resultDiv.innerHTML='<font color="#cf7809" size="4"><b> Bienvenue ' +json.login+'</b></font>';
+            resultDiv.innerHTML='<font color="#cf7809" size="3"><b>' +json.login+'</b></font>';
 			//document.getElementById("mdiv").innerHTML=json.reponse;
 			//alert(json.reponse);
 			}
@@ -68,23 +68,23 @@ function listerFichier()
 			resultDiv=document.getElementById("contenu");
 					//resultDiv.style.display='inline'; 
 					//resultDiv.innerHTML+=json.login[0];
-					resultDiv.innerHTML+='<table>';
+					//resultDiv.innerHTML+='<table>';
 			var obj = json.login;
-			
+				resultDiv.innerHTML+='<ul class="list-group">';
 			for (var i = 0; i < json.login.length; i++) 
 			{
 				//resultDiv.innerHTML+='<table>';
 				//resultDiv.innerHTML+='<tr><td>'
 				var download=json.login[i];
-				resultDiv.innerHTML+='<a href=javascript:downloadFile("./donnee/'+download+'"); >'+json.login[i]+'</a>';
-				resultDiv.innerHTML+='<a href=javascript:PartageFile("'+download+'");> 	partager 	</a>';
-				//resultDiv.innerHTML+='<a href=javascript:RenommerFile("'+download+'");>  	Renommer 	</a>';
-				resultDiv.innerHTML+='<a href=javascript:supprimFile("'+download+'");> 	Supprimer	</a>';
-				resultDiv.innerHTML+='<br/>';
 			
+				resultDiv.innerHTML+='<li class="list-group-item"  onmouseover="OnMouseIn (this)" onmouseout="OnMouseOut (this)"><a href=javascript:downloadFile("'+download+'"); >'+json.login[i]+'</a><a href=javascript:RenameFile("'+download+'"); ><span class="glyphicon glyphicon-pencil" id="id_div_1"></span></a><a href=javascript:PartageFile("'+download+'"); ><span class="glyphicon glyphicon-share" id="id_div_1"></span></a><a href=javascript:supprimFile("'+download+'"); ><span class="glyphicon glyphicon-remove" id="id_div_1"></span></a></li>';
+		
+				
+			//resultDiv.innerHTML+='<a href=javascript:RenommerFile("'+download+'");>  	Renommer 	</a>';
 			
 			}
-			resultDiv.innerHTML+='</table>';
+			resultDiv.innerHTML+='</ul>';
+			//resultDiv.innerHTML+='</table>';
 			//downloadFile('./test.txt');
 			/*var arr=[];
 				for(elem in obj){
@@ -101,4 +101,31 @@ function listerFichier()
 	})
 
 }
+
+        function OnMouseIn (elem) {
+            
+			elem.style.backgroundColor="gray";
+			
+			
+        }
+        function OnMouseOut (elem) {
+            elem.style.border = "";
+			elem.style.backgroundColor="white";
+			
+			
+        }
+		
+		
+		function Affiche(txt)
+{
+ var elmt = document.getElementById("idDiv");
+ elmt.innerHTML = txt;
+ elmt.style.visibility ="visible";
+}
  
+function Cache()
+{
+ var elmt = document.getElementById("idDiv"); 
+ elmt.innerHTML = "&nbsp;";
+ elmt.style.visibility="hidden";
+}

@@ -40,7 +40,7 @@ class Tag{
 	 $Email=$_SERVER['PHP_AUTH_USER'];
 	try
             {
-                 $bdd = new PDO('mysql:host=localhost;dbname=cloud', 'root', '5ecur1ty');
+                 $bdd = new PDO('mysql:host=127.4.62.2;dbname=smartframe', 'admin1MwVTtq', 'sf19c3wA7hGf');
             }
         catch (Exception $e)
             {

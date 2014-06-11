@@ -16,14 +16,10 @@ $(document).ready(function()
 			{
 				arr.push(obj[elem]);
 				var length = document.forms.form_tag.list.length;	
-						 // nouveau= new Option(obj[elem],obj[elem],false,true);
-						//document.forms.form_tag.list.options[length] = nouveau;
-
 				var option = document.createElement('OPTION');
 				x.options.add(option);
 				option.innerHTML = obj[elem];
-				//x.add(option);
-				//x.appendChild(option);
+
 			}
 			resultDiv.innerHTML+="</select>";
 			resultDiv.innerHTML+="</form>";
@@ -41,18 +37,20 @@ $(document).ready(function()
 								success: function(json) {
 														resultDiv=document.getElementById("contenu");
 														resultDiv.innerHTML="";
-														resultDiv.innerHTML+='<table>';
+														//resultDiv.innerHTML+='<table>';
+														resultDiv.innerHTML+='<ul class="list-group">';
 														var obj = json.reponse;
 			
 															for (var i = 0; i < json.reponse.length; i++) 
 															{
 																var download=json.reponse[i];
-																resultDiv.innerHTML+='<a href=javascript:downloadFile("./donnee/'+download+'"); >'+json.reponse[i]+'</a>';
-																resultDiv.innerHTML+='<br/>';
-			
+																//resultDiv.innerHTML+='<a href=javascript:downloadFile("./donnee/'+download+'"); >'+json.reponse[i]+'</a>';
+																//resultDiv.innerHTML+='<br/>';
+			resultDiv.innerHTML+='<li class="list-group-item"  ><a href=javascript:downloadFile("'+download+'"); >'+json.reponse[i]+'</a><a href=javascript:RenameFile("'+download+'"); ><span class="glyphicon glyphicon-pencil" id="id_div_1"></span></a><a href=javascript:PartageFile("'+download+'"); ><span class="glyphicon glyphicon-share" id="id_div_1"></span></a><a href=javascript:supprimFile("'+download+'"); ><span class="glyphicon glyphicon-remove" id="id_div_1"></span></a></li>';
+		
 															}
-																resultDiv.innerHTML+='</table>';
-			
+																//resultDiv.innerHTML+='</table>';
+				resultDiv.innerHTML+='</ul>';
 														}
 								})
 										});

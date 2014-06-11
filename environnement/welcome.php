@@ -17,6 +17,7 @@ if(isset($_POST['welcome']))
 		$array['login'] = $salut;
 		echo json_encode($array);
 		//exit;	
+		
 	}
 	else if (empty($repons))
 	{

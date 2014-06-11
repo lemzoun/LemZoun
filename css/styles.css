@@ -950,6 +950,6 @@ margin:auto;
 
 
 /*background: url('/lemZoun/image-site/image-index/logo.png') no-repeat 480px 190px ;*/
-background: url('/image-site/image-index/logo.png') no-repeat;
+background: url('./image-site/image-index/logo.png') no-repeat;
 
 }

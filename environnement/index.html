@@ -8,21 +8,40 @@
 		<meta name="apple-itunes-app" content="app-id=543672169">
 		
 		<link rel="shortcut icon" href="../image-site/image-index/favicon.png" />
-		<link rel="stylesheet" href="css/files.css" type="text/css" media="screen" />
-		<link rel="stylesheet" href="css/core.css" type="text/css" media="screen" />
-		<link rel="stylesheet" href="css/upload.css" type="text/css" media="screen" />
-		<link rel="stylesheet" href="../css/styles.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css"> 
+		<link rel="stylesheet" href="bootstrap/dist/css/core.css"> 	
 		<link type="text/css" rel="stylesheet" href="../css/lightbox-form.css">
-		<link type="text/css" rel="stylesheet" href="../css/partage.css">
+		<link rel="stylesheet" href="css/files.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="css/upload.css" type="text/css" media="screen" />
 		
-		<script type="text/javascript" src="../js/jquery.min.js"></script>
-		<script type="text/javascript" src="../js/lightbox-form.js"></script>
+		
+			<script type="text/javascript" src="../js/lightbox-form.js"></script>
+			<script type="text/javascript" src="bootstrap/js/dropdown.js"></script>
+			<script type="text/javascript" src="../js/jquery.min.js"></script>
+			<script type="text/javascript" src="../js/galery.js"></script>
+			<script type="text/javascript" src="../js/jquery.imageSlide.js"></script>
+			<script type="text/javascript">         
+            $(function()
+            {
+                $('#galerie').imageSlide(
+{
+    'width': '500px',
+    'height': '300px',
+    'makeLinks': true,
+    'callback': function(image)
+    {
+        $('#description').text(image.attr('title'));
+    }
+});
+            });
+        </script>
 		<script type="text/javascript" src="../js/list_tag.js"></script>
 		<script type="text/javascript" src="../js/script.js"></script>
 		<script type="text/javascript" src="../js/welcome.js"></script>
 		<script type="text/javascript" src="../js/download.js"></script>
 		<script type="text/javascript" src="../js/partager_fichier.js"></script>
 		<script type="text/javascript" src="../js/evenement.js"></script>
+		<script type="text/javascript" src="../js/forms.js"></script>
 		<script>
 		
 			$(document).ready(function() 
@@ -36,7 +55,7 @@
 					} 
 					else {
 					$.ajax({
-						url: 'Tag.php',
+						url: 'tag.php',
 						type: 'POST',
 						data: $(this).serialize(),
 						dataType: 'json',
@@ -56,53 +75,62 @@
 		</script>
 </head>
 				
-<body id="body-user" onload="welcome();listerFichier();" >
-	<header>
-		<div id="header">
-			<div id="logo-claim" style="display:none;"></div>
-			<div id="mdiv"></div>
-			<div id="logout"><input id="logout_bt" type="button" value="Déconnexion" onclick='logout();'/> </div>
-		</div>
-	</header>
-	<nav>
-		<div id="navigation">
-			<ul id="apps" class="svg">
-				<div class="wrapper"></br>
-					<li data-id="files_index">
-						<a href="" title="" class="active">
-							<span>Files</span>
-						</a>
-					</li>
-					<li data-id="tags_index">
-						<a href="#AjouterTag" onclick="openbox(1)">
-							<font size=3px><span>Tags</span></font></a>
-					</li>
-					<li data-id="evenement_index">
-						<a href="#" onclick="evenement();">
-							<font size=3px><span>evenements</span></font></a>
-					</li>
-									
-				</div>
-			</ul>
-		</div>
-	</nav>
-	<div id="content-wrapper">
-		<div id="content">
-			<div id="controls">		
-				<div class="actions creatable">
-					<form enctype="multipart/form-data" method="POST" id='form1' name='form1'>
-						<div id="upload" class="button" title="Upload max. 25 MB">
-							<input type="file" id="file_upload_start" name='files' multiple />
-								<a href="#" class="svg"></a>
-						</div>
-						<div id="list_tag" ></div>
+<body onload="welcome();listerFichier();" >
+
+			<div id="header">
+				<div id="owncloud"><img class="svg" src="logo3.png" alt="LemZoun" /></div>
+				<div id="logo-claim" style="display:none;"></div>
+					<nav class="navbar" id="settings">
+						<ul class="nav navbar-nav">
+							<li class="dropdown">
+								<a data-toggle="dropdown" href="#"><div id="mdiv"></div><b class="caret"></b></a>
+									<ul class="dropdown-menu">
+										<li><a href="javascript:changer_password();">Confidentialité</a></li>
+										<li><a href="#" onClick="downloadFile('res.jar');">télécharger LemZoun</a></li>
+										<li><a href="#">aide</a></li>
+										<li><a href="#" onclick='logout();'>logout</a></li>
+									</ul>
+							</li>
+						</ul>
+					</nav>
+					<form class="searchbox" action="#" method="post">
+						<input id="searchbox" class="svg" type="search" name="query"value="" autocomplete="off" x-webkit-speech placeholder=" recherche"/>
 					</form>
-				</div></br>
-				<div id="divi"></div>
 			</div></br></br></br>
-			<div id="contenu"></div>		
-		</div>	
-	</div>
+	<div class="container">
+				<nav class="navbar navbar-inverse">
+					<ul class="nav navbar-nav">
+						<li class="active"> <a href=""><img src="home.jpg"/> </a> </li>
+						<li > <a href=""><img src="files.png"/>  Fichiers</a> </li>
+						<li> <a href="javascript:galeryimage();" id="thelink" onclick="openbox(1)"><img src="image.png"/> Image</a> </li>
+						<li > <a href="#AjouterTag" onclick="openbox(1)"><img src="tag.png"/> Tag	</a> </li>
+						<li > <a href="javascript:evenement();"><img src="fichiers_partager.jpg"/> Fichiers Partagé         </a> </li>
+						<li class="disabled"><div id="list_tag" ></div></li>	
+														
+					</ul>
+				</nav>
+				
+					<div id="content">
+						<div id="controls">		
+							<div class="actions creatable">
+								
+										
+								<form enctype="multipart/form-data" method="POST" id='form1' name='form1'>
+							
+									<div id="upload" class="button" title="Upload max. 2 MB">
+										<input type="file" id="file_upload_start" name='files' multiple />
+										<a href="#" class="svg"></a>
+									</div>
+								
+									
+								</form>
+							</div></br>
+							<div id="divi"></div>
+						</div></br><div id="rename"></div></br>
+						<div id="contenu"></div>		
+					</div>	
+					
+			</div>
 	<div id="shadowing"></div>
 		<div id="box">
 			<div class="modalLayer" id="AjouterTag">
@@ -121,19 +149,7 @@
 		<div id='mess_up'>
 		</div>
 		
-		
-<!-- 		
-		<div id="shadowingPartage"></div>
-		<div id="boxPartage">
-			<div class="modalLayerPartage" id="Partage">
-				<div class="popup_block_Partage">
-					<a href="">
-						<img alt="Fermer" title="Fermer la fenêtre" class="btn_close" src="../image-site/image-index/close_pop.png">
-					</a>
-					<div id="Partage"></div>
-				</div>
-			</div>
-		</div> -->
+<script src="bootstrap/dist/js/bootstrap.min.js"></script>
 	</body>		
 </html>			
 	
